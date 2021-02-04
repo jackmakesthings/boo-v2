@@ -1,0 +1,78 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://placeholders/street-background.png" type="Texture" id=1]
+[ext_resource path="res://player.gd" type="Script" id=2]
+[ext_resource path="res://placeholders/ghost.png" type="Texture" id=3]
+[ext_resource path="res://placeholders/streetlamp.png" type="Texture" id=4]
+[ext_resource path="res://game.gd" type="Script" id=5]
+[ext_resource path="res://fonts/Chewy-Regular.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0666667, 0.0431373, 0.101961, 0.913725 )
+corner_detail = 1
+
+[sub_resource type="DynamicFont" id=2]
+size = 80
+font_data = ExtResource( 6 )
+
+[node name="game" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 5 )
+
+[node name="Node2D" type="Node2D" parent="."]
+pause_mode = 1
+
+[node name="background" type="Sprite" parent="Node2D"]
+position = Vector2( 0, -7 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="streetlight" type="Node2D" parent="Node2D"]
+position = Vector2( 1088.94, 192.333 )
+
+[node name="Sprite" type="Sprite" parent="Node2D/streetlight"]
+texture = ExtResource( 4 )
+
+[node name="player" type="KinematicBody2D" parent="Node2D"]
+position = Vector2( 231.931, 441.235 )
+script = ExtResource( 2 )
+
+[node name="body" type="Node2D" parent="Node2D/player"]
+
+[node name="Sprite" type="Sprite" parent="Node2D/player/body"]
+texture = ExtResource( 3 )
+
+[node name="player_cam" type="Camera2D" parent="Node2D/player"]
+current = true
+limit_left = 0
+
+[node name="pause_screen" type="CanvasLayer" parent="."]
+pause_mode = 2
+layer = -1
+follow_viewport_enable = true
+
+[node name="panel" type="Panel" parent="pause_screen"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="pause_screen/panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -108.0
+margin_top = -52.0
+margin_right = 108.0
+margin_bottom = 52.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Paused"
